@@ -2,7 +2,7 @@
 ### C# Graphics Library for drawing graphics in Windows Command Prompt
 
 ![downloads](https://img.shields.io/github/downloads/BananaBoii600/Console-Game-Engine/total)
-![release](https://img.shields.io/github/v/release/BananaBoii600/Console-Game-Engine)
+![release](https://img.shields.io/github/release/BananaBoii600/Console-Game-Engine)
 ![licence](https://img.shields.io/github/license/BananaBoii600/Console-Game-Engine)
 ![issues](https://img.shields.io/github/issues-raw/BananaBoii600/Console-Game-Engine)
 
