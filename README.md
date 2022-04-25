@@ -1,10 +1,10 @@
 # ConsoleGameEngine
 ### C# Graphics Library for drawing graphics in Windows Command Prompt
 
-![downloads](https://img.shields.io/github/downloads/BananaBoii600/ConsoleGameEngine/total)
-![release](https://img.shields.io/github/v/release/BananaBoii600/ConsoleGameEngine)
-![licence](https://img.shields.io/github/license/BananaBoii600/ConsoleGameEngine)
-![issues](https://img.shields.io/github/issues-raw/BananaBoii600/ConsoleGameEngine)
+![downloads](https://img.shields.io/github/downloads/BananaBoii600/Console-Game-Engine/total)
+![release](https://img.shields.io/github/v/release/BananaBoii600/Console-Game-Engine)
+![licence](https://img.shields.io/github/license/BananaBoii600/Console-Game-Engine)
+![issues](https://img.shields.io/github/issues-raw/BananaBoii600/Console-Game-Engine)
 
 ---
 **ConsoleGameEngine** is a C# library that wraps around the `System.Console` class, adding enhanced 
