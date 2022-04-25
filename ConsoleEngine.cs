@@ -353,6 +353,8 @@
 
 		// Bresenhams Line Algorithm
 		// https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
+		
+		
 		/// <summary> Draws a line from start to end. (Bresenhams Line) </summary>
 		/// <param name="start">Point to draw line from.</param>
 		/// <param name="end">Point to end line at.</param>
@@ -452,4 +454,180 @@
 		public void Grid(Point a, Point b, int spacing, int color, ConsoleCharacter c = ConsoleCharacter.Full) {
 			Grid(a, b, spacing, color, Background, c);
 		}
+		
+		/// <summary> Draws a grid. </summary>
+		/// <param name="a">Top Left corner of grid.</param>
+		/// <param name="b">Bottom Right corner of grid.</param>
+		/// <param name="spacing">the spacing until next line</param>
+		/// <param name="fgColor">Color to draw with.</param>
+		/// <param name="bgColor">Color to draw the background with.</param>
+		/// <param name="c">Character to use.</param>
+		public void Grid(Point a, Point b, int spacing, int fgColor,int bgColor, ConsoleCharacter c = ConsoleCharacter.Full)
+		{
+			for(int y = a.Y; y < b.Y / spacing; y++) {
+				Line(new Point(a.X, y * spacing), new Point(b.X, y * spacing), fgColor,bgColor, c);
+			}
+			for(int x = a.X; x < b.X / spacing; x++) {
+				Line(new Point(x * spacing, a.Y), new Point(x * spacing, b.Y), fgColor, bgColor, c);
+			}
+		}
 
+		/// <summary> Draws a Triangle, calls overloaded method with background as bgColor </summary>
+		/// <param name="a">Point A.</param>
+		/// <param name="b">Point B.</param>
+		/// <param name="c">Point C.</param>
+		/// <param name="color">Color to draw with.</param>
+		/// <param name="character">Character to use.</param>
+		public void Triangle(Point a, Point b, Point c, int color, ConsoleCharacter character = ConsoleCharacter.Full) {
+			Triangle(a,b,c,color,Background,character);
+		}
+
+		/// <summary> Draws a Triangle. </summary>
+		/// <param name="a">Point A.</param>
+		/// <param name="b">Point B.</param>
+		/// <param name="c">Point C.</param>
+		/// <param name="fgColor">Color to draw with.</param>
+		/// <param name="bgColor">Color to draw to the background with.</param>
+		/// <param name="character">Character to use.</param>
+		public void Triangle(Point a, Point b, Point c, int fgColor,int bgColor, ConsoleCharacter character = ConsoleCharacter.Full)
+		{
+			Line(a, b, fgColor,bgColor, character);
+			Line(b, c, fgColor, bgColor, character);
+			Line(c, a, fgColor, bgColor, character);
+		}
+
+		// Bresenhams Triangle Algorithm
+
+		/// <summary> Draws a Triangle and fills it, calls overloaded method with background as bgColor </summary>
+		/// <param name="a">Point A.</param>
+		/// <param name="b">Point B.</param>
+		/// <param name="c">Point C.</param>
+		/// <param name="color">Color to draw with.</param>
+		/// <param name="character">Character to use.</param>
+		public void FillTriangle(Point a, Point b, Point c, int color, ConsoleCharacter character = ConsoleCharacter.Full) {
+			FillTriangle(a, b, c, color, Background, character);
+		}
+
+		/// <summary> Draws a Triangle and fills it. </summary>
+		/// <param name="a">Point A.</param>
+		/// <param name="b">Point B.</param>
+		/// <param name="c">Point C.</param>
+		/// <param name="fgColor">Color to draw with.</param>
+		/// <param name="bgColor">Color to draw to the background with.</param>
+		/// <param name="character">Character to use.</param>
+		public void FillTriangle(Point a, Point b, Point c, int fgColor, int bgColor, ConsoleCharacter character = ConsoleCharacter.Full)
+		{
+			Point min = new Point(Math.Min(Math.Min(a.X, b.X), c.X), Math.Min(Math.Min(a.Y, b.Y), c.Y));
+			Point max = new Point(Math.Max(Math.Max(a.X, b.X), c.X), Math.Max(Math.Max(a.Y, b.Y), c.Y));
+
+			Point p = new Point();
+			for(p.Y = min.Y; p.Y < max.Y; p.Y++) {
+				for(p.X = min.X; p.X < max.X; p.X++) {
+					int w0 = Orient(b, c, p);
+					int w1 = Orient(c, a, p);
+					int w2 = Orient(a, b, p);
+
+					if(w0 >= 0 && w1 >= 0 && w2 >= 0) SetPixel(p, fgColor,bgColor, character);
+				}
+			}
+		}
+
+		private int Orient(Point a, Point b, Point c) {
+			return ((b.X - a.X) * (c.Y - a.Y)) - ((b.Y - a.Y) * (c.X - a.X));
+		}
+
+		#endregion Primitives
+
+		// Input
+
+		/// <summary>Checks to see if the console is in focus </summary>
+		/// <returns>True if Console is in focus</returns>
+		private bool ConsoleFocused()
+		{
+			return NativeMethods.GetConsoleWindow() == NativeMethods.GetForegroundWindow();
+		}
+
+		/// <summary> Checks if specified key is pressed. </summary>
+		/// <param name="key">The key to check.</param>
+		/// <returns>True if key is pressed</returns>
+		public bool GetKey(ConsoleKey key) {
+			short s = NativeMethods.GetAsyncKeyState((int)key);
+			return (s & 0x8000) > 0 && ConsoleFocused();
+		}
+
+		/// <summary> Checks if specified keyCode is pressed. </summary>
+		/// <param name="virtualkeyCode">keycode to check</param>
+		/// <returns>True if key is pressed</returns>
+		public bool GetKey(int virtualkeyCode)
+		{
+			short s = NativeMethods.GetAsyncKeyState(virtualkeyCode);
+			return (s & 0x8000) > 0 && ConsoleFocused();
+		}
+
+		/// <summary> Checks if specified key is pressed down. </summary>
+		/// <param name="key">The key to check.</param>
+		/// <returns>True if key is down</returns>
+		public bool GetKeyDown(ConsoleKey key) {
+			int s = Convert.ToInt32(NativeMethods.GetAsyncKeyState((int)key));
+			return (s == -32767) && ConsoleFocused();
+		}
+
+		/// <summary> Checks if specified keyCode is pressed down. </summary>
+		/// <param name="virtualkeyCode">keycode to check</param>
+		/// <returns>True if key is down</returns>
+		public bool GetKeyDown(int virtualkeyCode)
+		{
+			int s = Convert.ToInt32(NativeMethods.GetAsyncKeyState(virtualkeyCode));
+			return (s == -32767) && ConsoleFocused();
+		}
+
+		/// <summary> Checks if left mouse button is pressed down. </summary>
+		/// <returns>True if left mouse button is down</returns>
+		public bool GetMouseLeft() {
+			short s = NativeMethods.GetAsyncKeyState(0x01);
+			return (s & 0x8000) > 0 && ConsoleFocused();
+		}
+
+		/// <summary> Checks if right mouse button is pressed down. </summary>
+		/// <returns>True if right mouse button is down</returns>
+		public bool GetMouseRight()
+		{
+			short s = NativeMethods.GetAsyncKeyState(0x02);
+			return (s & 0x8000) > 0 && ConsoleFocused();
+		}
+
+		/// <summary> Checks if middle mouse button is pressed down. </summary>
+		/// <returns>True if middle mouse button is down</returns>
+		public bool GetMouseMiddle()
+		{
+			short s = NativeMethods.GetAsyncKeyState(0x04);
+			return (s & 0x8000) > 0 && ConsoleFocused();
+		}
+
+		/// <summary> Gets the mouse position. </summary>
+		/// <returns>The mouse's position in character-space.</returns>
+		/// <exception cref="Exception"/>
+		public Point GetMousePos() {
+			NativeMethods.Rect r = new NativeMethods.Rect();
+			NativeMethods.GetWindowRect(consoleHandle, ref r);
+
+			if (NativeMethods.GetCursorPos(out NativeMethods.POINT p)) {
+				Point point = new Point();
+				if (!IsBorderless) {
+					p.Y -= 29;
+					point = new Point(
+						(int)Math.Floor(((p.X - r.Left) / (float)FontSize.X) - 0.5f),
+						(int)Math.Floor(((p.Y - r.Top) / (float)FontSize.Y))
+					);
+				} else {
+					point = new Point(
+						(int)Math.Floor(((p.X - r.Left) / (float)FontSize.X)),
+						(int)Math.Floor(((p.Y - r.Top) / (float)FontSize.Y))
+					);
+				}
+				return new Point(Utility.Clamp(point.X, 0, WindowSize.X - 1), Utility.Clamp(point.Y, 0, WindowSize.Y - 1));
+			}
+			throw new Exception();
+		}
+	}
+ }
