@@ -95,6 +95,8 @@ class AppName : ConsoleGame {
   <img src="https://github.com/BananaBoii600/Console-Game-Engine/blob/master/Media/cave.gif" width = 512 heigth = 384 />
 </p>
 
+## This project was heavily inspired by the github user logan dahl
+
 ## Licensing
 
 This project, and all code it contains, is licensed under *The Unlicense* and can be read [here](UNLICENSE).
