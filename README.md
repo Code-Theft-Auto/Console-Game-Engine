@@ -16,7 +16,7 @@ color palette, fullscreen capabilites, input handling and more.
 </p>
 
 ## Installation / Getting Started
-- [Download Lastest Build](https://github.com/BananaBoii600/Console-Game-Engine/releases/)
+- [Download Latest Build](https://github.com/BananaBoii600/Console-Game-Engine/releases/)
 - Clone git repo and build yourself
 > git clone https://github.com/BananaBoii600/Console-Game-Engine.git
 
@@ -83,7 +83,7 @@ class AppName : ConsoleGame {
 }
 ```
 
-##### Try out some example games over [here](https://github.com/ollelogdahl/ConsoleGameEngine/tree/master/Examples)
+##### Try out some example games over [here](https://github.com/BananaBoii600/ConsoleGameEngine/tree/master/Examples)
 
 ## Notes
 - Color palette limited to 16 colors in a single session *(this is an internal limitation, see [MDSN](https://docs.microsoft.com/en-us/windows/console/console-screen-buffer-infoex))*
